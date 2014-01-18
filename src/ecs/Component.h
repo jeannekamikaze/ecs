@@ -11,7 +11,7 @@ class Component : public Base...
 	Entity e;
 
 protected:
-
+    
 	Entity owner() const { return e; }
 
 public:

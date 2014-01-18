@@ -14,7 +14,7 @@ class event
 	std::list<callback> callbacks;
 
 public:
-
+    
 	void operator+= (const callback& c)
 	{
 		callbacks.push_back(c);

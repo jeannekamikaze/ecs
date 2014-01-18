@@ -108,7 +108,7 @@ int main ()
 #endif
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Game");
-	window.setFramerateLimit(60);
+    window.setFramerateLimit(60);
 	
     EManager manager;
     ecs::Entity e1 = manager.createEntity();

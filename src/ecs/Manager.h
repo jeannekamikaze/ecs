@@ -75,7 +75,7 @@ public:
     using component = ComponentManager<C>;
 
 	Manager() = default;
-
+    
     Entity createEntity()
     {
         std::size_t id;
