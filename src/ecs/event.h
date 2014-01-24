@@ -10,58 +10,58 @@ namespace ecs
 template <class... Args>
 class event
 {
-	typedef std::function<void(Args...)> callback;
-	std::list<callback> callbacks;
+    typedef std::function<void(Args...)> callback;
+    std::list<callback> callbacks;
 
 public:
     
-	void operator+= (const callback& c)
-	{
-		callbacks.push_back(c);
-	}
+    void operator+= (const callback& c)
+    {
+        callbacks.push_back(c);
+    }
 
-	template <typename T>
-	void operator+= (T& t)
-	{
-		callbacks.push_back([&t](Args... args) { t.onEvent(args...); });
-	}
+    template <typename T>
+    void operator+= (T& t)
+    {
+        callbacks.push_back([&t](Args... args) { t.onEvent(args...); });
+    }
 
-	template <typename T>
-	void operator+= (T* t)
-	{
-		callbacks.push_back([=](Args... args) { t->onEvent(args...); });
-	}
+    template <typename T>
+    void operator+= (T* t)
+    {
+        callbacks.push_back([=](Args... args) { t->onEvent(args...); });
+    }
 
-	void operator() (Args... args)
-	{
-		for (const callback& c : callbacks) c(args...);
-	}
+    void operator() (Args... args)
+    {
+        for (const callback& c : callbacks) c(args...);
+    }
 };
 
-template <class Message>
-class Emitter
+template <typename... Messages>
+class _Emitter
 {
 public:
-	event<Entity, Message> emit;
+    event<Entity, Messages...> emit;
 };
 
-template <class Message>
-class Receiver
+template <typename Message>
+class _Receiver
 {
 public:
-	virtual void onEvent(Entity src, const Message&) = 0;
+    virtual void onEvent(Entity src, const Message&) = 0;
 };
 
 template <typename X, typename... XS>
-class Emit : public Emit<X>, public Emit<XS...> {};
+class Emitter : public Emitter<X>, public Emitter<XS...> {};
 
 template <typename X>
-class Emit<X> : public Emitter<X>{};
+class Emitter<X> : public _Emitter<X>{};
 
 template <typename X, typename... XS>
-class Receive : public Receive<X>, public Receive<XS...> {};
+class Receiver : public Receiver<X>, public Receiver<XS...> {};
 
 template <typename X>
-class Receive<X> : public Receiver<X>{};
+class Receiver<X> : public _Receiver<X>{};
 
 } // namespace OGDT

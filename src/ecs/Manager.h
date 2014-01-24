@@ -17,10 +17,10 @@ class ComponentManager
 {
     container<Component*> components;
 
-	ComponentManager(const ComponentManager&)  = delete;
-	ComponentManager(const ComponentManager&&) = delete;
-	ComponentManager& operator= (const ComponentManager&)  = delete;
-	ComponentManager& operator= (const ComponentManager&&) = delete;
+    ComponentManager(const ComponentManager&)  = delete;
+    ComponentManager(const ComponentManager&&) = delete;
+    ComponentManager& operator= (const ComponentManager&)  = delete;
+    ComponentManager& operator= (const ComponentManager&&) = delete;
 
 public:
 
@@ -39,7 +39,7 @@ public:
 
     void remove(Entity e)
     {
-		delete components[e.id];
+        delete components[e.id];
         components[e.id] = nullptr;
     }
 
@@ -64,17 +64,17 @@ class Manager : public ComponentsManager<Components...>
     container<bool> entities;
     container<Entity> free_entities;
 
-	Manager(const Manager&)  = delete;
-	Manager(const Manager&&) = delete;
-	Manager& operator= (const Manager&)  = delete;
-	Manager& operator= (const Manager&&) = delete;
+    Manager(const Manager&)  = delete;
+    Manager(const Manager&&) = delete;
+    Manager& operator= (const Manager&)  = delete;
+    Manager& operator= (const Manager&&) = delete;
 
 public:
 
     template <typename C>
     using component = ComponentManager<C>;
 
-	Manager() = default;
+    Manager() = default;
     
     Entity createEntity()
     {
